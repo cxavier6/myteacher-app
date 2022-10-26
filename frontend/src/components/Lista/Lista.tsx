@@ -1,45 +1,31 @@
 import { Button } from "@mui/material"
-import { Descricao, Foto, Info, ItemLista, ListaStyled, Nome, Valor } from "./Lista.style"
+import { Professor } from "../../@types/professor"
+import { Descricao, Foto, Info, ItemLista, ListaStyled, ListaVazia, Nome, Valor } from "./Lista.style"
 
-export const Lista = () => {
+interface ListaProps {
+    professores: Professor[],
+}
+
+export const Lista = (props: ListaProps) => {
   return (
-    <ListaStyled>
-        <ItemLista>
-            <Foto src="https://github.com/cxavier6.png"></Foto>
-            <Info>
-                <Nome>Camila Reis</Nome>
-                <Valor>R$ 100,00 por hora</Valor>
-                <Descricao>Aulas de programação</Descricao>
-                <Button sx={{ width: '70%'}}>Marcar aula com Camila</Button>
-            </Info>
-        </ItemLista>
-        <ItemLista>
-            <Foto src="https://github.com/cxavier6.png"></Foto>
-            <Info>
-                <Nome>Camila Reis</Nome>
-                <Valor>R$ 100,00 por hora</Valor>
-                <Descricao>Aulas de programação</Descricao>
-                <Button sx={{ width: '70%'}}>Marcar aula com Camila</Button>
-            </Info>
-        </ItemLista>
-        <ItemLista>
-            <Foto src="https://github.com/cxavier6.png"></Foto>
-            <Info>
-                <Nome>Camila Reis</Nome>
-                <Valor>R$ 100,00 por hora</Valor>
-                <Descricao>Aulas de programação</Descricao>
-                <Button sx={{ width: '70%'}}>Marcar aula com Camila</Button>
-            </Info>
-        </ItemLista>
-        <ItemLista>
-            <Foto src="https://github.com/cxavier6.png"></Foto>
-            <Info>
-                <Nome>Camila Reis</Nome>
-                <Valor>R$ 100,00 por hora</Valor>
-                <Descricao>Aulas de programação</Descricao>
-                <Button sx={{ width: '70%'}}>Marcar aula com Camila</Button>
-            </Info>
-        </ItemLista>
-    </ListaStyled>
+    <div>
+        {props.professores.length > 0 ? (
+            <ListaStyled>
+            {props.professores.map(professor => (
+                <ItemLista key={professor.id}>
+                    <Foto src={professor.foto}></Foto>
+                        <Info>
+                        <Nome>{professor.nome}</Nome>
+                        <Valor>{professor.valor_hora.toLocaleString('pt-BR', { minimumFractionDigits: 2, style:'currency', currency: 'BRL'})} por hora</Valor>
+                        <Descricao>{professor.descricao}</Descricao>
+                        <Button sx={{ width: '70%'}}>Marcar aula com {professor.nome}</Button>
+                    </Info>
+                </ItemLista>
+            ))}
+        </ListaStyled>
+        ) : (
+            <ListaVazia>Nenhum item encontrado</ListaVazia>
+        )}
+    </div>
   )
 }
